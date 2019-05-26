@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import '../static/css/todolist.css';
 
 class TodoList extends Component{
     constructor(props){
@@ -19,19 +20,24 @@ class TodoList extends Component{
         return(
             <div className="to-do-list-wrap">
                 <p>TODOLIST</p>
-                <input type="text" placeholder="请输入您要添加的内容" 
-                       value={this.state.inputVal} 
-                       onChange={this.inputDidChange.bind(this)}/>
+                {/* 在JSX中如果给某个标签添加一个class,不可以使用class='xx',而是要写成className='xx' */}
+                <input  type="text" 
+                        placeholder="请输入您要添加的内容"
+                        className="input"
+                        value={this.state.inputVal} 
+                        onChange={this.inputDidChange.bind(this)}/>
                 <button onClick={this.addList.bind(this)}>添加</button>
                 <ul>
                     {/* 在react循环一个标签如下所示,它没有vue这种v-for的指令 */}
                     {
                         this.state.list.map((item,index)=>{
                             return (
-                                <li key={index}>
+                                // 这里的li返回的是转义后的li,相当于vue中的v-text,如果我们想渲染一个输入的标签该怎么做呢?
+                                <li key={index} >
                                     <span>{item}</span>
                                     <button onClick={this.del.bind(this,index)}>删除</button>
                                 </li>
+                                // <li key={index} dangerouslySetInnerHTML={{__html:item}}></li>    注意这个写法!!!
                             )
                         })
                     }

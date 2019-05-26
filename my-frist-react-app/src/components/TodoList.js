@@ -22,11 +22,19 @@ class TodoList extends Component{
                 <input type="text" placeholder="请输入您要添加的内容" 
                        value={this.state.inputVal} 
                        onChange={this.inputDidChange.bind(this)}/>
-                <button>添加</button>
+                <button onClick={this.addList.bind(this)}>添加</button>
                 <ul>
-                    <li>吃饭</li>
-                    <li>睡觉</li>
-                    <li>打豆豆</li>
+                    {/* 在react循环一个标签如下所示,它没有vue这种v-for的指令 */}
+                    {
+                        this.state.list.map((item,index)=>{
+                            return (
+                                <li key={index}>
+                                    <span>{item}</span>
+                                    <button onClick={this.del.bind(this,index)}>删除</button>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         )
@@ -40,6 +48,28 @@ class TodoList extends Component{
         this.setState({
             inputVal:e.target.value
         })
+    }
+    addList(){
+        /**
+         * 添加数据
+         * 数组解构赋值
+         */
+        this.setState({
+            list:[...this.state.list,this.state.inputVal],
+            inputVal:''
+        })
+    }
+    del(index){
+        /**
+         * immutable
+         * react 的设计思想是不允许我们直接改变state中的任何数据
+         * 每次我们修改的时时候都需要深拷贝这个数据副本,修改它的副本
+         */
+        let arr = [...this.state.list];
+        arr.splice(index,1);
+        this.setState({
+            list:arr
+        });
     }
 }
 export default TodoList;

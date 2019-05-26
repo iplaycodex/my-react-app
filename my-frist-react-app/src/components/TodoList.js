@@ -1,6 +1,14 @@
 import React,{Component} from 'react';
 
 class TodoList extends Component{
+    constructor(props){
+        super(props);
+        // this.state 称之为组件的状态
+        this.state = {
+            inputVal:'',
+            list:[]
+        }
+    }
     // render 函数表示返回的组件的模板
     render(){
         /**
@@ -11,7 +19,9 @@ class TodoList extends Component{
         return(
             <div className="to-do-list-wrap">
                 <p>TODOLIST</p>
-                <input type="text" placeholder="请输入您要添加的内容"/>
+                <input type="text" placeholder="请输入您要添加的内容" 
+                       value={this.state.inputVal} 
+                       onChange={this.inputDidChange.bind(this)}/>
                 <button>添加</button>
                 <ul>
                     <li>吃饭</li>
@@ -20,6 +30,16 @@ class TodoList extends Component{
                 </ul>
             </div>
         )
+    }
+    inputDidChange(e){
+        /**
+         * 在react中如果想要修改state中的值得话是不可以直接this.state.inputVal = XX;
+         * this.state.inputVal = e.target.value;
+         * 必须使用一个方法this.setState({xx:yy}); 这样才可以修改,如下所示:
+         */
+        this.setState({
+            inputVal:e.target.value
+        })
     }
 }
 export default TodoList;

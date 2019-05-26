@@ -1,9 +1,13 @@
-import React,{ Component } from 'react';
+import React,{ Component,Fragment } from 'react';
+import HelloWorld from './components/HelloWorld';
 
 class App extends Component{
   render(){
     return(
-      <div>HELLO WORLD!</div>
+      <Fragment>
+        <div>This is my frist react app!</div>
+        <HelloWorld/>
+      </Fragment>
     )
   }
 }
